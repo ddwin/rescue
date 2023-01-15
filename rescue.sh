@@ -50,14 +50,12 @@ or if your operating system does not use sudo:
 
 To get version number, release date, last git commit and git retrieval date of this script, use:
 
-  ${0} -v
   ${0} -V
   ${0} --version
 
 To get this help text, use:
 
   ${0} -h
-  ${0} -help
   ${0} --help
 
 
