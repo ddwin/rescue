@@ -27,3 +27,43 @@ version() {
   printf '\n\n'
   exit 0
 }
+
+
+## Display help text ##
+#
+#   ./rescue.sh -h
+#   ./rescue.sh --help
+
+help() {
+  cat <<HELP
+
+Usage Script:
+----------------------------------------------------------------------------------------------------
+Run the script as sudoer:
+
+  sudo ${0} [options] [parameters]
+
+or if your operating system does not use sudo:
+
+  su -
+  ${0} [options] [parameters]
+
+To get version number, release date, last git commit and git retrieval date of this script, use:
+
+  ${0} -v
+  ${0} -V
+  ${0} --version
+
+To get this help text, use:
+
+  ${0} -h
+  ${0} -help
+  ${0} --help
+
+
+The last development version of Script can be downloaded, with:
+
+  ${0} --update
+
+HELP
+}
