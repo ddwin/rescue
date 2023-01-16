@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VERSION='0.01'
-RELEASE_DATE='2023-01-15'
+RELEASE_DATE='2023-01-16'
 COMMIT_DATE=''
 
 ## Check if the script is run with bash as shell interpreter.
@@ -34,36 +34,37 @@ version() {
 help() {
   cat <<HELP
 
-----------------------------------------------------------------------------------------------------
 Usage:
 ----------------------------------------------------------------------------------------------------
+Run sudo chmod +x ./${0} or chmod +x ./${0} at first.
+
 Run the script as sudoer:
 
-  sudo ${0} [options]
+  sudo ./${0} [options]
 
 or if your operating system does not use sudo:
 
   su -
-  ${0} [options]
+  ./${0} [options]
 
 To get version number, release date, last git commit and git retrieval date, with:
 
-  ${0} -v
-  ${0} --version
+  ./${0} -v
+  ./${0} --version
 
 To get this help text, with:
 
-  ${0} -h
-  ${0} --help
+  ./${0} -h
+  ./${0} --help
 
 To get last version of script, with:
 
-  ${0} -u
-  ${0} --update
+  ./${0} -u
+  ./${0} --update
 
 To start rescue mode, with:
 
-  ${0}
+  ./${0}
 
 HELP
 }
