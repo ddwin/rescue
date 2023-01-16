@@ -2,7 +2,6 @@
 
 VERSION='0.01'
 RELEASE_DATE='2023-01-16'
-COMMIT_DATE=''
 
 ## Check if the script is run with bash as shell interpreter.
 if [ -z "$BASH_VERSION" ]; then
@@ -17,11 +16,6 @@ fi
 
 version() {
   printf '\nScript version: %s\n  Release date: %s' "${VERSION}" "${RELEASE_DATE}"
-
-  if [[ -n "${COMMIT_DATE}" ]]; then
-    printf '\n  Commit date: %s' "${COMMIT_DATE}"
-  fi
-
   printf '\n\n'
   exit 0
 }
@@ -88,35 +82,17 @@ update() {
   UTC_TIME=$(date --utc "+%Y-%m-%d_%T")
   FILENAME="${HOME}/rescue_${UTC_TIME}.sh"
 
+  printf 'Downloading last version from: %s\n' "${git_contents_url}"
+
   # Check if wget or curl is available
   if [[ $(type wget echo $? >/dev/null 2>&1) -eq 0 ]]; then
-    printf '\nDownloading last version from git ...\n'
-
-    printf '\nDownloading last commit refrence from: %s\n' "${git_ref_url}"
-    LAST_COMMIT_ID=$(wget -O - "${git_ref_url}" | sed -ne 's/^.*"sha": "\(.*\)".*$/\1/p')
-
-    git_commit_url="${git_commit_url}/$LAST_COMMIT_ID"
-    printf 'Downloading last commit from: %s\n' "${git_commit_url}"
-    LAST_COMMIT=$(wget -O - "${git_commit_url}/$LAST_COMMIT_ID")
-
-    printf 'Downloading last version from: %s\n' "${git_contents_url}"
     wget -O "${FILENAME}" "${git_contents_url}"
   elif [[ $(type curl echo $? >/dev/null 2>&1) -eq 0 ]]; then
-    printf 'Downloading last development version of Script from git:\n\n'
-    LAST_COMMIT_ID=$(curl "${git_ref_url}" | sed -ne 's/^.*"sha": "\(.*\)".*$/\1/p')
-    LAST_COMMIT=$(curl "${git_commit_url}/$LAST_COMMIT_ID")
-
     curl -o "${FILENAME}" "${git_contents_url}"
   else
     printf '"wget" or "curl" could not be found.\nInstall at least one of them and try again.\n' >&2
     exit 1
   fi
-
-  # First date is Author, second date is Commit
-  COMMIT_DATE=$(echo "${LAST_COMMIT}" | sed -ne 's/^[[:space:]]*"date": "\(.*\)"[[:space:]]*$/\1/p' | tail -1)
-
-  # Set the retrieval date in just downloaded script.
-  sed -i "s/^COMMIT_DATE=.*/COMMIT_DATE='${COMMIT_DATE}'/" "${FILENAME}"
 
   printf '\nThe last version of script was downloaded.\n\n'
   mv "${FILENAME}" "${0}"
