@@ -36,8 +36,6 @@ help() {
 
 Usage:
 ----------------------------------------------------------------------------------------------------
-Run sudo chmod +x ${0##*/} or chmod +x ${0##*/} at first.
-
 Run the script as sudoer:
 
   sudo ${0##*/} [options]
@@ -118,7 +116,7 @@ update() {
   COMMIT_DATE=$(echo "${LAST_COMMIT}" | sed -ne 's/^[[:space:]]*"date": "\(.*\)"[[:space:]]*$/\1/p' | tail -1)
 
   # Set the retrieval date in just downloaded script.
-  sed -i "s/COMMIT_DATE=.*/COMMIT_DATE='${COMMIT_DATE}'/" "${FILENAME}"
+  sed -i "s/^COMMIT_DATE=.*/COMMIT_DATE='${COMMIT_DATE}'/" "${FILENAME}"
 
   printf '\nThe last version of script was downloaded.\n\n'
   mv "${FILENAME}" "${0}"
