@@ -119,8 +119,8 @@ update() {
   sed -i "s/^COMMIT_DATE=.*/COMMIT_DATE='${COMMIT_DATE}'/" "${FILENAME}"
 
   printf '\nThe last version of script was downloaded.\n\n'
-  mv "${FILENAME}" "${0##*/}"
-  chmod +x "${0##*/}"
+  mv "${FILENAME}" "${0}"
+  chmod +x "${0}"
   exit 0
 }
 
